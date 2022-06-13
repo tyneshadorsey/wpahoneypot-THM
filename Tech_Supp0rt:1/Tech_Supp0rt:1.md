@@ -51,6 +51,7 @@ Service Info: Host: TECHSUPPORT; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 ```
 Let's checkout that webpage they have up by opening that page using [ipaddress]:80 in my web browser.
+
 ![image](https://user-images.githubusercontent.com/36011916/173442865-21a79d8e-541e-48ff-9cae-d26a32c47047.png)
 
 > view page source by right clicking or using ctrl  = u
@@ -74,8 +75,16 @@ Lets try a few of those and see if we get a hit.
 gobuster dir -u 10.10.22.236 -w [path to wordlist]
 ```
 Using the directory-list-2.3-medium.txt in the dirbuster directory, i was able to find 3 directories
+```
 /wordpress
-/test
-/server-status
 
-Lets navigate to those and see what we can find
+/test
+
+/server-status
+```
+Lets navigate to those and see what we can find..
+
+Visiting the /wordpress directory we're met with this homepage
+
+![image](https://user-images.githubusercontent.com/36011916/173446886-085e441c-2a1a-41cc-8069-4f572420be92.png)
+
