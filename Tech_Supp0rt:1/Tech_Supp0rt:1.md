@@ -21,3 +21,10 @@ if you ever want to insert this command in the terminal
 ```
 subl README.md
 ```
+I run a simple ping to make sure the host is up.
+
+> Another helpful tip is to create output you nmap result to a file for readability.
+```
+nmap -sC -sV -oN [file to output to]
+```
+> -sC default script | -sV probe open ports to determine service/version info | -oN output scan in normal
