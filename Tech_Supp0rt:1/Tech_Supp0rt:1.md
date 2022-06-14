@@ -14,10 +14,10 @@ Find the root.txt flag
 Enumeration is incredibly important in pentesting. Nmap should always be your first stop! 
 This helps us discover what ports are open as well as provide basic information about any machine.
 
-> Something I found helpful when working a room is to create a README for every room containing basic information,
+> Something I found helpful when working a room is to create a README for every room containing basic information
 > and steps you took. It's useful if you ever enter a new room and face a similar problem. I'll attach mine in the Tech_Supp0rt:1 folder.
 
-if you ever want to, insert this command in the terminal
+if you ever want to do the same, you can insert this command in the terminal to create a file in Sublime Text. 
 ```
 subl README.md
 ```
@@ -47,14 +47,12 @@ PORT    STATE SERVICE     VERSION
 139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
 445/tcp open  netbios-ssn Samba smbd 4.3.11-Ubuntu (workgroup: WORKGROUP)
 MAC Address: 02:66:11:7B:A4:59 (Unknown)
-Service Info: Host: TECHSUPPORT; OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
 ```
-Let's checkout that webpage they have up by opening that page using [ipaddress]:80 in my web browser.
+Hmmm.. Let's checkout that webpage by inserting [ipaddress]:80 in my web browser.
 
 ![image](https://user-images.githubusercontent.com/36011916/173442865-21a79d8e-541e-48ff-9cae-d26a32c47047.png)
 
-> view page source by right clicking or using ctrl  = u
+> view page source by right clicking or using ctrl + u
 > check if there's any hidden elements first
 
 I couldn't find any so, I opted to use gobuster. 
