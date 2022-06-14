@@ -25,14 +25,14 @@ subl README.md
 > to a file named inital by running the following commands.
 ```
 mkdir nmap
-nmap -sC -sV -oN [file to output to] [attackbox_ip]
+nmap -sC -sV -oN [file to output to] [targetip]
 ```
 > -sC default script | -sV probe open ports to determine service/version info | -oN output scan in normal
 
 Here's a snippet of the output that was returned. 
 ```
 Starting Nmap 7.60 ( https://nmap.org ) at 2022-06-13 21:34 BST
-Nmap scan report for ip-10-10-22-236.eu-west-1.compute.internal (10.10.22.236)
+Nmap scan report for ip-XX-XX-XX-XXX.eu-west-1.compute.internal (XX.XX.XX.XXX)
 Host is up (0.0063s latency).
 Not shown: 996 closed ports
 PORT    STATE SERVICE     VERSION
@@ -62,15 +62,15 @@ I couldn't find any so, I opted to use gobuster.
 
 THM provides a few wordlists in the "Tool" directory:
 ```
-root@ip-10-10-71-98:~# cd Tools/wordlists
-root@ip-10-10-71-98:~/Tools/wordlists# ls
+root~# cd Tools/wordlists
+root:~/Tools/wordlists# ls
 dirb       fasttrack.txt   PythonForPentesters  SecLists
 dirbuster  MetasploitRoom  rockyou.txt          wordlists.zip
 
 ```
 Lets try a few of those and see if we get a hit. 
 ```
-gobuster dir -u 10.10.22.236 -w [path to wordlist]
+gobuster dir -u [targetip] -w [path to wordlist]
 ```
 Using the directory-list-2.3-medium.txt in the dirbuster directory, i was able to find 3 directories
 ```
@@ -106,12 +106,12 @@ Reconnecting with SMB1 for workgroup listing.
 
 Lets see what's shared on the websvr within the workgroup
 ```
-smbclient \\\\10.10.178.211\\websvr
+smbclient \\\\[target-ip]\\websvr
 ```
 Hit enter again when it asks for a password. Then run the dir command to see what we can see.
 Here's a snippet of the output
 ```
-root@ip-10-10-159-110:~# smbclient \\\\10.10.178.211\\websvr
+root:~# smbclient \\\\[targetip]\\websvr
 WARNING: The "syslog" option is deprecated
 Enter WORKGROUP\root's password: 
 Try "help" to get a list of possible commands.
@@ -160,7 +160,7 @@ searchsploit subrion
 ```
 Here's what I was returned
 ```
-root@ip-10-10-180-15:~# searchsploit Subrion CMS 4.2.1
+root:~# searchsploit Subrion CMS 4.2.1
 [i] Found (#2): /opt/searchsploit/files_exploits.csv
 [i] To remove this message, please edit "/opt/searchsploit/.searchsploit_rc" for "files_exploits.csv" (package_array: exploitdb)
 
