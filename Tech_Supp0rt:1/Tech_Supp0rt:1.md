@@ -80,7 +80,58 @@ Using the directory-list-2.3-medium.txt in the dirbuster directory, i was able t
 
 /server-status
 ```
-Lets navigate to those and see what we can find..
+Along with webserver port open, we also had 139 and 445 open. Let's pivot quickly and try some SMB enumeration.
+
+> smbclient allows us to see whats on the shared samba drives.
+> The -L flag lists the shares provided by the IP address.
+```
+smbclient -L [targetip]
+```
+It asks for a password to the workgroup. Since we dont yet have that so I hit enter and was returned the following
+```
+Sharename       Type      Comment
+---------       ----      -------
+	print$          Disk      Printer Drivers
+	websvr          Disk      
+	IPC$            IPC       IPC Service (TechSupport server (Samba, Ubuntu))
+Reconnecting with SMB1 for workgroup listing.
+
+	Server               Comment
+	---------            -------
+
+	Workgroup            Master
+	---------            -------
+	WORKGROUP  
+```
+
+Lets see what's shared on the websvr withing the workgroup
+```
+smbclient \\\\10.10.178.211\\websvr
+```
+Hit enter again when it asks for a password. Then run the dir command to see what we can see.
+Here's a snippet of the output
+```
+root@ip-10-10-159-110:~# smbclient \\\\10.10.178.211\\websvr
+WARNING: The "syslog" option is deprecated
+Enter WORKGROUP\root's password: 
+Try "help" to get a list of possible commands.
+smb: \> dir
+  .                                   D        0  Sat May 29 08:17:38 2021
+  ..                                  D        0  Sat May 29 08:03:47 2021
+  enter.txt                           N      273  Sat May 29 08:17:38 2021
+
+		8460484 blocks of size 1024. 5678248 blocks available
+smb: \> 
+```
+What's enter.txt? Let't take a look. In the smbclient terminal insert the following command
+```
+get enter.txt
+```
+> Ctrl+C to exit smbclient. Then run the ls command and that textfile should be in your home directory. Use subl or cat to open it and view its contents. 
+![image](https://user-images.githubusercontent.com/36011916/173634923-e051efce-6fac-4cac-b8a4-cd52b99e5de0.png)
+Hmm.. fake popup? could this be a trail from our scammer? admin credentials?  
+
+Lets navigate back to those webdomains we found and see what we can find..
 
 Visiting the /wordpress directory we're met with this homepage
 
