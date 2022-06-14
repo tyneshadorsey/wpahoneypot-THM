@@ -104,7 +104,7 @@ Reconnecting with SMB1 for workgroup listing.
 	WORKGROUP  
 ```
 
-Lets see what's shared on the websvr withing the workgroup
+Lets see what's shared on the websvr within the workgroup
 ```
 smbclient \\\\10.10.178.211\\websvr
 ```
@@ -123,17 +123,64 @@ smb: \> dir
 		8460484 blocks of size 1024. 5678248 blocks available
 smb: \> 
 ```
-What's enter.txt? Let't take a look. In the smbclient terminal insert the following command
+What's enter.txt? Let't take a look. In the smbclient terminal you can the following command to retrieve the file.
 ```
 get enter.txt
 ```
 > Ctrl+C to exit smbclient. Then run the ls command and that textfile should be in your home directory. Use subl or cat to open it and view its contents. 
 ![image](https://user-images.githubusercontent.com/36011916/173634923-e051efce-6fac-4cac-b8a4-cd52b99e5de0.png)
-Hmm.. fake popup? could this be a trail from our scammer? admin credentials?  
+Hmm.. fake popup? Could this be a paper trail from our scammer? Are those admin credentials?  
 
-Lets navigate back to those webdomains we found and see what we can find..
+Lets navigate back to those web domains we found earlier and see what we can find..
+
+Visiting the /test directory we're met with this homepage
+![image](https://user-images.githubusercontent.com/36011916/173638083-bf932089-5ea1-4e1f-b164-3ca1cb01ca7c.png)
+> That must be the fake popup from the list of goals.
+
+After a inspecting the site a bit, seems like its a static site. Nothing important there to enumerate, so lets move on.
+
+Their list of goals mentioned a subrion domain, I attempted to visit that and as the note said.. it didnt work 🙃
+But it says something about a panel. Lets just see if adding that to the domain works..
+![image](https://user-images.githubusercontent.com/36011916/173657383-035eea34-4b5b-4aa3-aa06-60f9906cd574.png)
+
+Let's see if those credentials from enter.txt works in this panel... nope, what does cooked with magical formula mean?
+A few google searches landed me at CyberChef, where they have a Magic operation lets try it out with our credential.
+I kept all the default values and got an hit. 
+![image](https://user-images.githubusercontent.com/36011916/173659732-09e97db3-92ce-4ba2-8d3f-8ba24dd39b86.png)
+
+
+I used it and was able to login and see this admin dashboard
+![image](https://user-images.githubusercontent.com/36011916/173659899-07b8ece1-d4d1-42ba-b9e7-7488f97f0d7e.png)
+
+After a some investigating, I only found a few empty usergroups (Moderators, Guests, and Registered) as well as a warning about removing the install/modules/module.install.php file. So lets pivot, we know now from the panel that they're using Subrion CMS v4.2.1. Lets find out if there's anything we can do with that intel. 
+
+> SearchSploit is a tool used to view exploit databases.
+```
+searchsploit subrion
+```
+Here's what I was returned
+```
+root@ip-10-10-180-15:~# searchsploit Subrion CMS 4.2.1
+[i] Found (#2): /opt/searchsploit/files_exploits.csv
+[i] To remove this message, please edit "/opt/searchsploit/.searchsploit_rc" for "files_exploits.csv" (package_array: exploitdb)
+
+[i] Found (#2): /opt/searchsploit/files_shellcodes.csv
+[i] To remove this message, please edit "/opt/searchsploit/.searchsploit_rc" for "files_shellcodes.csv" (package_array: exploitdb)
+
+----------------------------------------------------------------------------------------------------------- ------------
+ Exploit Title                                                                                             |  Path
+----------------------------------------------------------------------------------------------------------- ------------
+Subrion CMS 4.2.1 - Cross-Site Scripting                                                                   | php/webapps/45150.txt
+----------------------------------------------------------------------------------------------------------- ------------
+Shellcodes: No Results
+
+```
+Nice! So now we know, they're suseptible to XSS. I'm already familiar with performing XSS attacks but if you aren't it might be useful to visit (w3schools.com/cybersecurity/cybersecurity_web_applications_attacks.php) or perform a few google searches to get more familiar. 
+
+Next, they mentioned editing the wordpress website..
 
 Visiting the /wordpress directory we're met with this homepage
 
 ![image](https://user-images.githubusercontent.com/36011916/173446886-085e441c-2a1a-41cc-8069-4f572420be92.png)
+
 
