@@ -11,6 +11,3 @@ A compilation of THM writeups/walkthroughs I've created and miscellaneous newbie
 
 ### Walkthroughs in Progress
 - Tech_Supp0rt:1
-
-### Tips and Need to Knows
-- Nmap overview
