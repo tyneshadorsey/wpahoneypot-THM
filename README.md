@@ -1,7 +1,7 @@
 <img src = https://user-images.githubusercontent.com/36011916/176710162-83b73e58-1e24-4c10-8b8d-4583d561942b.png>
 
 <b>Description:</b>
-A compilation of THM writeups/walkthroughs I've created.
+A compilation of THM writeups/walkthroughs I've created and miscellaneous newbie hacker tips and need-to-knows. 
 
 <b>THM Profile Link:</b> https://tryhackme.com/p/wpahoneypot
 
@@ -11,3 +11,6 @@ A compilation of THM writeups/walkthroughs I've created.
 
 ### Walkthroughs in Progress
 - Tech_Supp0rt:1
+
+### Tips and Need to Knows
+- Nmap overview
